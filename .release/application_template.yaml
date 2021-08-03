@@ -8,7 +8,6 @@ repo_name: dustyspace/laravel-example
 hostnames:
 - laravel: laravel-${env_id}-${domain}
 - meilisearch: meilisearch-${env_id}-${domain}
-- mailhog: mailhog-${env_id}-${domain}
 environment_templates:
 - name: ephemeral
 - name: permanent
