@@ -1,7 +1,7 @@
 ---
 app: laravel-example
 auto_deploy: true
-context: release-test-us-west-2
+context: release-handsup-us-east-1
 domain: laravel-example.releaseapp.gethandsup.com
 mode: development
 repo_name: dustyspace/laravel-example
