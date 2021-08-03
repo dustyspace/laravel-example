@@ -16,9 +16,7 @@ ARG WWWGROUP
 WORKDIR /var/www/html
 
 COPY --from=composer /app /var/www/html
-COPY --from=composer /app/vendor /var/www/html/vendor
 
-RUN ls -la /var/www/html/vendor
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=UTC
