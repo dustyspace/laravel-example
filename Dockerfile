@@ -63,6 +63,7 @@ COPY --from=composer /app/vendor/laravel/sail/runtimes/8.0/start-container /usr/
 COPY --from=composer /app/vendor/laravel/sail/runtimes/8.0/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY --from=composer /app/vendor/laravel/sail/runtimes/8.0/php.ini /etc/php/8.0/cli/conf.d/99-sail.ini
 RUN chmod +x /usr/local/bin/start-container
+RUN chown -R sail:sail /var/www/html
 
 RUN composer install
 
