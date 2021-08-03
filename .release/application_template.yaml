@@ -1,0 +1,122 @@
+---
+app: laravel-example
+auto_deploy: true
+context: release-test-us-west-2
+domain: laravel-example.releaseapp.gethandsup.com
+mode: development
+repo_name: dustyspace/laravel-example
+hostnames:
+- laravel: laravel-${env_id}-${domain}
+- meilisearch: meilisearch-${env_id}-${domain}
+- mailhog: mailhog-${env_id}-${domain}
+environment_templates:
+- name: ephemeral
+- name: permanent
+resources:
+  cpu:
+    limits: 1000m
+    requests: 100m
+  memory:
+    limits: 1Gi
+    requests: 100Mi
+  replicas: 1
+services:
+- name: laravel
+  image: dustyspace/laravel-example/laravel
+  build:
+    context: "."
+    dockerfile: Dockerfile
+    args:
+    - WWWGROUP=82
+  has_repo: true
+  static: false
+  depends_on:
+  - mysql
+  - redis
+  - meilisearch
+  - selenium
+  ports:
+  - type: node_port
+    target_port: '80'
+    port: '80'
+- name: mysql
+  image: mysql:8.0
+  volumes:
+  - type: persistent
+    name: sailmysql
+    mount_path: "/var/lib/mysql"
+  liveness_probe:
+    exec:
+      command:
+      - mysqladmin
+      - ping
+      - "-p"
+    failure_threshold: 3
+    period_seconds: 30
+    timeout_seconds: 5
+  ports:
+  - type: container_port
+    port: '3306'
+  storage:
+    size: 10Gi
+    type: aws-efs
+- name: redis
+  image: redis:alpine
+  liveness_probe:
+    exec:
+      command:
+      - redis-cli
+      - ping
+    failure_threshold: 3
+    period_seconds: 30
+    timeout_seconds: 5
+  ports:
+  - type: container_port
+    port: '6379'
+- name: meilisearch
+  image: getmeili/meilisearch:latest
+  volumes:
+  - type: persistent
+    name: sailmeilisearch
+    mount_path: "/data.ms"
+  liveness_probe:
+    exec:
+      command:
+      - wget
+      - "--no-verbose"
+      - "--spider"
+      - http://localhost:7700/health
+    failure_threshold: 3
+    period_seconds: 30
+    timeout_seconds: 5
+  ports:
+  - type: node_port
+    target_port: '7700'
+    port: '7700'
+  storage:
+    size: 10Gi
+    type: aws-efs
+- name: mailhog
+  image: mailhog/mailhog:latest
+  ports:
+  - type: node_port
+    target_port: '1025'
+    port: '1025'
+  - type: node_port
+    target_port: '8025'
+    port: '8025'
+- name: selenium
+  image: selenium/standalone-chrome
+workflows:
+- name: setup
+  order_from:
+  - services.redis
+  - services.mysql
+  - services.redis
+  - services.mailhog
+  - services.meilisearch
+  - services.laravel
+- name: patch
+  order_from:
+  - services.laravel
+
