@@ -5,7 +5,7 @@ defaults:
 - key: APP_ENV
   value: local
 - key: APP_KEY
-  value: 
+  value: base64:66dtq9pYRIG9R+i0xetG/60tKNqyCtNsiSV4kqWPywA=
 - key: APP_DEBUG
   value: true
 - key: APP_URL
