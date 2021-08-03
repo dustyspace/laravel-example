@@ -109,14 +109,19 @@ services:
   image: selenium/standalone-chrome
 workflows:
 - name: setup
-  order_from:
-  - services.redis
-  - services.mysql
-  - services.redis
-  - services.mailhog
-  - services.meilisearch
-  - services.laravel
+  parallelize:
+  - step: data
+    tasks:
+    - services.redis
+    - services.mysql
+  - step: app
+    tasks:
+    - services.mailhog
+    - services.meilisearch
+    - services.laravel
 - name: patch
-  order_from:
-  - services.laravel
+  parallelize:
+  - step: app
+    tasks:
+    - services.laravel
 
