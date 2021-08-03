@@ -114,10 +114,9 @@ workflows:
     tasks:
     - services.redis
     - services.mysql
+    - services.meilisearch
   - step: app
     tasks:
-    - services.mailhog
-    - services.meilisearch
     - services.laravel
 - name: patch
   parallelize:
