@@ -1,4 +1,57 @@
-defaults: []
+defaults:
+
+- key: APP_NAME
+  value: Laravel
+- key: APP_ENV
+  value: local
+- key: APP_KEY
+  value: 
+- key: APP_DEBUG
+  value: true
+- key: APP_URL
+  value: http://localhost
+
+- key: LOG_CHANNEL
+  value: stack
+- key: LOG_LEVEL
+  value: debug
+
+- key: DB_CONNECTION
+  value: mysql
+- key: DB_HOST
+  value: mysql
+- key: DB_PORT
+  value: 3306
+- key: DB_DATABASE
+  value: laravel_example_app
+- key: DB_USERNAME
+  value: root
+- key: DB_PASSWORD
+  value: password
+
+- key: BROADCAST_DRIVER
+  value: log
+- key: CACHE_DRIVER
+  value: file
+- key: FILESYSTEM_DRIVER
+  value: local
+- key: QUEUE_CONNECTION
+  value: sync
+- key: SESSION_DRIVER
+  value: file
+- key: SESSION_LIFETIME
+  value: 120
+
+- key: MEMCACHED_HOST
+  value: 127.0.0.1
+
+- key: REDIS_HOST
+  value: redis
+- key: REDIS_PASSWORD
+  value: null
+- key: REDIS_PORT
+  value: 6379
+
 services:
   laravel:
   - key: WWWUSER
@@ -6,8 +59,6 @@ services:
   - key: LARAVEL_SAIL
     value: 1
   mysql:
-  - key: MYSQL_USER
-    value: root
   - key: MYSQL_DATABASE
     value: laravel_example_app
   - key: MYSQL_PASSWORD
