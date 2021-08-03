@@ -1,0 +1,22 @@
+defaults: []
+services:
+  laravel:
+  - key: WWWUSER
+    value: www
+  - key: LARAVEL_SAIL
+    value: 1
+  mysql:
+  - key: MYSQL_USER
+    value: root
+  - key: MYSQL_DATABASE
+    value: laravel_example_app
+  - key: MYSQL_PASSWORD
+    value: 'password'
+  - key: MYSQL_ROOT_PASSWORD
+    value: 'password'
+  - key: MYSQL_ALLOW_EMPTY_PASSWORD
+    value: 'yes'
+  redis: []
+  meilisearch: []
+  mailhog: []
+  selenium: []
